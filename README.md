@@ -38,4 +38,3 @@ A Python-based system to manage library resources, including books, magazines, a
 
 - **Efficient Item Management:** The system streamlines the process of managing library items, making it easier to add, remove, and track items.
 - **Improved User Experience:** Users can easily search for items and check out/return items, with automatic due date and fine management.
-- **Reduced Overdue Fines:** The system helps reduce overdue fines by automatically detecting overdue items and calculating fines.
