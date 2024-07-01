@@ -1,0 +1,104 @@
+# Library Management System
+
+class LibraryItem:
+    def __init__(self, title, author, category):
+        self.title = title
+        self.author = author
+        self.category = category
+        self.checked_out = False
+        self.due_date = None
+
+    def check_out(self, due_date):
+        if not self.checked_out:
+            self.checked_out = True
+            self.due_date = due_date
+            print(f"{self.title} has been checked out.")
+        else:
+            print(f"{self.title} is already checked out.")
+
+    def return_item(self):
+        if self.checked_out:
+            self.checked_out = False
+            self.due_date = None
+            print(f"{self.title} has been returned.")
+        else:
+            print(f"{self.title} is not checked out.")
+
+    def is_overdue(self, current_date):
+        if self.checked_out and self.due_date < current_date:
+            return True
+        return False
+
+
+class Book(LibraryItem):
+    def __init__(self, title, author, category, publisher):
+        super().__init__(title, author, category)
+        self.publisher = publisher
+
+
+class Magazine(LibraryItem):
+    def __init__(self, title, author, category, issue_date):
+        super().__init__(title, author, category)
+        self.issue_date = issue_date
+
+
+class DVD(LibraryItem):
+    def __init__(self, title, author, category, release_date):
+        super().__init__(title, author, category)
+        self.release_date = release_date
+
+
+class Library:
+    def __init__(self):
+        self.items = []
+
+    def add_item(self, item):
+        self.items.append(item)
+        print(f"{item.title} has been added to the library.")
+
+    def remove_item(self, item):
+        if item in self.items:
+            self.items.remove(item)
+            print(f"{item.title} has been removed from the library.")
+        else:
+            print(f"{item.title} is not in the library.")
+
+    def search_by_title(self, title):
+        results = [item for item in self.items if item.title.lower() == title.lower()]
+        return results
+
+    def search_by_author(self, author):
+        results = [item for item in self.items if item.author.lower() == author.lower()]
+        return results
+
+    def search_by_category(self, category):
+        results = [item for item in self.items if item.category.lower() == category.lower()]
+        return results
+
+    def check_overdue_fines(self, current_date):
+        overdue_items = [item for item in self.items if item.is_overdue(current_date)]
+        for item in overdue_items:
+            print(f"{item.title} is overdue. Fine: $1.00")
+
+
+# Create a library instance
+library = Library()
+
+# Add items to the library
+library.add_item(Book("To Kill a Mockingbird", "Harper Lee", "Fiction", "J.B. Lippincott & Co."))
+library.add_item(Magazine("National Geographic", "Various", "Science", "2022-01-01"))
+library.add_item(DVD("The Shawshank Redemption", "Frank Darabont", "Drama", "1994-09-23"))
+
+# Check out an item
+library.items[0].check_out("2022-02-15")
+
+# Return an item
+library.items[0].return_item()
+
+# Search for items
+print(library.search_by_title("To Kill a Mockingbird"))
+print(library.search_by_author("Harper Lee"))
+print(library.search_by_category("Fiction"))
+
+# Check for overdue fines
+library.check_overdue_fines("2022-02-20")
